@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+  dobot_gui.launch — Run DOBOT sim in one command.
+
+  Loads the URDF, starts robot_state_publisher (TF only), starts the
+  Tkinter button GUI (dobot_button_gui.py) that PUBLISHES /joint_states,
+  and opens RViz.
+
+  Do NOT also run `display.launch` — that file launches its own
+  joint_state_publisher_gui which would fight with this GUI's publisher
+  and cause the robot model in RViz to flicker.
+-->
+<launch>
+  <!-- URDF on the parameter server -->
+  <param name="robot_description"
+         textfile="$(find magician)/urdf/demo.urdf" />
+
+  <!-- Publishes TF from /joint_states + URDF. Does NOT publish /joint_states. -->
+  <node name="robot_state_publisher"
+        pkg="robot_state_publisher"
+        type="robot_state_publisher" />
+
+  <!-- Tk button GUI: publishes /joint_states (only one publisher, no flicker) -->
+  <node name="dobot_button_gui"
+        pkg="magician_control"
+        type="dobot_button_gui.py"
+        output="screen" />
+
+  <!-- Optional click-and-go markers (plane + click publisher) -->
+  <node name="plane_marker_node"
+        pkg="magician"
+        type="plane_marker.py"
+        output="screen" />
+  <node name="click_coordinate_node"
+        pkg="magician"
+        type="click_coord_publisher.py"
+        output="screen" />
+
+  <!-- RViz with the project's saved config -->
+  <node name="rviz"
+        pkg="rviz"
+        type="rviz"
+        args="-d $(find magician)/config/demo.rviz" />
+</launch>

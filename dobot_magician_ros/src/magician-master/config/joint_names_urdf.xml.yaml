@@ -1,0 +1,12 @@
+# Controller joint names (active). joint_3 / joint_4 commented because
+# this dobot model ไม่ได้ใช้งาน — ดูเดิม controller_joint_names:
+#   ['joint_1', 'joint2', 'joint_3', 'Joint4', 'Joint5', ]
+#
+# (ชื่อเดิมมี casing แปลก joint2/Joint4/Joint5 — คงไว้ตามเดิม)
+
+controller_joint_names:
+  - joint_1
+  - joint2
+  # - joint_3   # commented: dobot รุ่นนี้ไม่ได้ใช้งาน
+  # - Joint4    # commented: dobot รุ่นนี้ไม่ได้ใช้งาน
+  - Joint5
